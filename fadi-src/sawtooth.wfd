@@ -1,0 +1,8 @@
+% Sample sawtooth wave
+Waveform Sawtooth
+{
+	set  (0,   0);
+	setb (50,  50);
+	seta (50,  -50);
+	set  (100, 0);
+} % Sawtooth

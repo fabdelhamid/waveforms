@@ -1,0 +1,39 @@
+% Sample square wave, 50% duty-cycle
+Waveform Square (dc)
+{
+	set  (0,   50);
+	setb (dc,  50);
+	seta (dc, -50);
+	set  (100,-50);
+} % Square
+
+% Sample sawtooth wave
+Waveform Sawtooth
+{
+	set  (0,  0);
+	setb (50, 50);
+	seta (50, -50);
+	set  (100, 0);
+	
+} % Sawtooth
+
+Sprite SquareToSawtooth
+{
+	time (0ms);
+	Loop (3) 
+	{
+		Load  (Square);
+		Morph (Square, Sawtooth, 9000ms);
+		Morph (Sawtooth, Square, 9000ms);
+	} % Loop
+	
+	time(10);
+		Morph (Square, Silence, 9000ms);
+		
+} % Sprite
+
+%%
+%% Future blocks: Sound SquareToSawtoothAndBack 
+%% Future blocks: forever {
+%%
+

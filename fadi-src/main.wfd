@@ -1,0 +1,18 @@
+% Flexible Audio Description Interpreter (FADI)
+
+%%
+%% Waveforms
+%% 
+include ("square.wfd");
+include ("sinusoidal.wfd");
+include ("hybrid.wfd");
+
+%%
+%% Sprites
+%%
+include ("SquareToSawtooth.wfd");
+
+%%
+%% Future blocks: Sound SquareToSawtoothAndBack 
+%% Future blocks: 
+%%

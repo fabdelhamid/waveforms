@@ -1,0 +1,12 @@
+% Sample sinc wave
+Waveform Sinc
+{
+	set  (0,   0);
+	set  (25,  30);
+	set  (50,  0);
+	setb (75,  30);
+	setb (100, 0);
+	
+	setmethod (0, "cos");
+
+} % sinc

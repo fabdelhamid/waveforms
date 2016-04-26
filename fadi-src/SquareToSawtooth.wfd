@@ -1,0 +1,12 @@
+Sprite SquareToSawtooth
+{
+	Loop (3) 
+	{
+		Load  (Square);
+		Morph (Sawtooth, 9000ms);
+		Morph (Square,   9000ms);
+	} % Loop
+	
+	Morph (Silence, 9000ms);
+		
+} % Sprite

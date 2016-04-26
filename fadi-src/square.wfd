@@ -1,0 +1,9 @@
+% Sample square wave, 50% duty-cycle
+Waveform Square
+{
+	set  (0,    50);
+	setb (50,   50);
+	seta (50,  -50);
+	setb (100, -50);
+
+} % Square

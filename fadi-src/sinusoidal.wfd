@@ -1,0 +1,12 @@
+% Sample sinusoidal wave
+Waveform Sinusoidal
+{
+	set  (0,   0);
+	set  (25,  50);
+	set  (50,  0);
+	setb (75, -50);
+	setb (100, 0);
+	
+	setmethod (0, "cos");
+
+} % Sinusoidal

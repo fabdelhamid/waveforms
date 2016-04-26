@@ -1,0 +1,47 @@
+% Flexible Audio Description Interpreter (FADI)
+
+% Sample square wave, 50% duty-cycle
+Waveform Square
+{
+	set  (0,    50);
+	setb (50,   50);
+	seta (50,  -50);
+	setb (100, -50);
+
+	setmethod (0,  "line");	
+	setmethod (50, "cos");
+	
+} % Square
+
+% Sample sawtooth wave
+Waveform Sawtooth
+{
+	set  (0,   0);
+	setb (50,  50);
+	seta (50,  -50);
+	set  (100, 0);
+} % Sawtooth
+
+Sprite SquareToSawtooth
+{
+	LoopForever
+	{
+		Load  (Square);
+		Morph (Sawtooth, 9000ms);
+		Morph (Square,   9000ms);
+	} % Loop
+	
+		
+} % SquareToSawtooth
+
+Sprite SquareToSawtooth:OnExit
+{
+	Morph (Silence, 9000ms);
+} % SquareToSawtooth:OnExit
+
+
+%%
+%% Future blocks: Sound SquareToSawtoothAndBack 
+%% Future blocks: forever {
+%%
+

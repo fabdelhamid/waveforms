@@ -1,0 +1,9 @@
+Waveform Hybrid
+{
+	set  (0,  -50);
+	set  (50,  50);
+	setb (100, -50);
+	
+	setmethod (0,  "line");		
+	setmethod (50, "cos");		
+} % Hybrid
