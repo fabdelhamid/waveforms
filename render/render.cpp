@@ -70,10 +70,6 @@ waveform_table_t GenerateWaveformTable (const waveform_t& input, const unsigned 
         } // if  
          
         
-        // Case: no next wavwpoints available 
-        // if (next_wavepoint
-    
-		//    
 		vector <amplitude_t> values = GetInterpolationVector (input, (*w).w_location, (*w).value,
                                                                next_wavepoint->w_location, next_wavepoint->value,
                                                                 req_samples);

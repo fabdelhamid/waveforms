@@ -1,0 +1,25 @@
+Flexible Audio Description Interpreter
+
+About
+	FADI is a C-like waveform description language. It can:
+
+		- Construct vectored waveforms (e.g. [LINK]a sinusoidal wave) from an easy-to-understand description.
+
+		- Process waveform transitions (e.g. [LINK]10-degree incremental phase-shift of a waveform or [LINK]morphing a square wave to a sawtooth over 5 		  	  seconds) both statically or as a real-time synthesizer
+
+
+	FADI code can also be compiled to bytecode, and run on a [LINK]dedicated real-time board. This offers improved performance with
+	real-time projects that are computationally intensive .
+
+Manual
+
+Get FADI
+
+Examples
+	Example library includes code and wave preview (ogg)
+
+Support
+	Contact the author.
+
+Contact
+	Fady Abdelhamid	

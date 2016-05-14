@@ -1,5 +1,5 @@
 #include "../wavegen.h"
-#define LinearInterpolation(x1,x2,x3,y1,y3) y1 + (x2 - x1) * (y3 - y1) / (x3 - x1)
+#define LinearInterpolation(x1,x2,x3,y1,y3) y1 + (x2 - x1) * (double) (y3 - y1) / (double) (x3 - x1)
 
 
 vector <amplitude_t> GetInterpolationVector (const waveform_t& waveform, location_t from, const amplitude_t amp_from,
@@ -10,7 +10,7 @@ vector <amplitude_t> GetInterpolationVector (const waveform_t& waveform, locatio
 	
 	// We first scale the number of samples to match the required 
 	// number of samples
-	
+		
 	double scale = (double) req_samples / waveform.Samples ();
 	
 	from *= scale;
@@ -36,6 +36,7 @@ vector <amplitude_t> GetInterpolationVector (const waveform_t& waveform, locatio
 		if (interpolation_method == "line")
 		{
     		amplitude_t y2 = LinearInterpolation (x1,x2,x3,y1,y3);
+    		
 			output.push_back (y2);    		
 		} // if -- linear
 
@@ -124,7 +125,7 @@ amplitude_t CosineInterpolation (location_t x1, location_t x2, location_t x3, am
     
     location_t    xmax, xmin;
     
-    amplitude_t   ymax, ymin;
+    double   ymax, ymin;
     const amplitude_t amax = MAX_AMPLITUDE;
     
     if (y1 > y3)
@@ -145,17 +146,22 @@ amplitude_t CosineInterpolation (location_t x1, location_t x2, location_t x3, am
 	
 	
 	double ksc, ksh, ktst;  // Scaling and shifting factors
-	ksc  = ((acos(ymax)/(double) xmax) - (acos(ymin)/(double) xmax)) /(double) (1 - xmin/(double) xmax);;
-	ksh  = (acos(ymin) - (double) ksc*xmin);
-	ktst = (acos(ymax)/(double) xmax);
-	
-	
-		
-    amplitude_t y2 = amax * cos (ksc * x2 + ksh);
-    
+	ksc  = ((acos(ymax)/(double) xmax) - (acos(ymin)/(double) xmax)) /(double) (1 - xmin/(double) xmax);
+	ksh  = (acos(ymin) - ksc* (double)  xmin);
+			
+    amplitude_t y2 = (double) ((double) amax * (double) cos (ksc * x2 + ksh));
+	/*
+    		cout << "x1 = " << x1 << endl;
+    		cout << "y1 = " << y1 << endl << endl;
+    		
+    		cout << "x3 = " << x3 << endl;
+    		cout << "y3 = " << y3 << endl << endl;
 
-	//system ("pause");
-       
+    		cout << "x2 = " << x2 << endl;
+    		cout << "y2 = " << y2 << endl << endl;
+    		
+    		 system ("pause"); 
+    */
     return y2;   
     
 } // CosineInterpolation

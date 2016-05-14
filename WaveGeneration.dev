@@ -2,7 +2,7 @@
 FileName=WaveGeneration.dev
 Name=WaveGeneration
 Type=1
-Ver=2
+Ver=3
 IsCpp=1
 LogOutput=
 LogOutputEnabled=0
@@ -14,26 +14,6 @@ PchHead=-1
 PchSource=-1
 ProfilesCount=1
 ProfileIndex=0
-ObjFiles=
-Includes=
-Libs=
-PrivateResource=
-ResourceIncludes=
-MakeIncludes=
-Compiler=
-CppCompiler=
-Linker=
-Icon=
-ExeOutput=
-ObjectOutput=
-OverrideOutput=0
-OverrideOutputName=
-HostApplication=
-UseCustomMakefile=0
-CustomMakefile=
-IncludeVersionInfo=0
-SupportXPThemes=0
-CompilerSet=0
 
 [VersionInfo]
 Major=1
@@ -54,8 +34,7 @@ ProductVersion=
 SyncProduct=1
 AutoIncBuildNrOnRebuild=0
 AutoIncBuildNrOnCompile=0
-UnitCount=25
-AutoIncBuildNr=0
+UnitCount=29
 
 [Unit1]
 FileName=wavegen.cpp
@@ -117,27 +96,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit7]
-FileName=math\run_function.cpp
-CompileCpp=1
-Folder=math
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit8]
-FileName=wavegen.h
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit9]
 FileName=error\error.cpp
 CompileCpp=1
 Folder=error
@@ -147,10 +106,20 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit10]
+[Unit9]
 FileName=error\error.h
 CompileCpp=1
 Folder=error
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit10]
+FileName=waveform\waveform.cpp
+CompileCpp=1
+Folder=components/waveform
 Compile=1
 Link=1
 Priority=1000
@@ -169,7 +138,7 @@ Compiler=
 CppCompiler=
 Linker=
 PreprocDefines=
-CompilerSettings=0000000000000000000000000
+CompilerSettings=0000000000000000001000000
 Icon=
 ExeOutput=Default Profile
 ImagesOutput=Images\
@@ -186,16 +155,6 @@ CompilerSet=0
 CompilerType=0
 
 [Unit12]
-FileName=waveform\waveform.h
-CompileCpp=1
-Folder=components/waveform
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit13]
 FileName=sprite\sprite.cpp
 CompileCpp=1
 Folder=components/sprite
@@ -205,7 +164,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit14]
+[Unit13]
 FileName=sprite\sprite.h
 CompileCpp=1
 Folder=components/sprite
@@ -215,7 +174,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit15]
+[Unit14]
 FileName=sound\sound.cpp
 CompileCpp=1
 Folder=components/sound
@@ -225,7 +184,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit16]
+[Unit15]
 FileName=sound\sound.h
 CompileCpp=1
 Folder=components/sound
@@ -235,7 +194,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit17]
+[Unit16]
 FileName=timepoint\timepoint.cpp
 CompileCpp=1
 Folder=components/timepoint
@@ -245,7 +204,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit18]
+[Unit17]
 FileName=timepoint\timepoint.h
 CompileCpp=1
 Folder=components/timepoint
@@ -255,7 +214,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit19]
+[Unit18]
 FileName=math\types.cpp
 CompileCpp=1
 Folder=math
@@ -265,17 +224,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit11]
-FileName=waveform\waveform.cpp
-CompileCpp=1
-Folder=components/waveform
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit20]
+[Unit19]
 FileName=math\types.h
 CompileCpp=1
 Folder=math
@@ -285,7 +234,17 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit21]
+[Unit11]
+FileName=waveform\waveform.h
+CompileCpp=1
+Folder=components/waveform
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit20]
 FileName=main\ReadFile.cpp
 CompileCpp=1
 Folder=main
@@ -295,7 +254,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit22]
+[Unit21]
 FileName=function\function.cpp
 CompileCpp=1
 Folder=components/function
@@ -305,7 +264,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit23]
+[Unit22]
 FileName=function\function.h
 CompileCpp=1
 Folder=components/function
@@ -315,7 +274,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit24]
+[Unit23]
 FileName=render\render.cpp
 CompileCpp=1
 Folder=render
@@ -325,7 +284,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit25]
+[Unit24]
 FileName=render\render.h
 CompileCpp=1
 Folder=render
@@ -335,7 +294,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit26]
+[Unit25]
 FileName=math\interpolation.cpp
 CompileCpp=1
 Folder=math
@@ -345,7 +304,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit27]
+[Unit26]
 FileName=math\DSP\dft.cpp
 CompileCpp=1
 Folder=math/DSP
@@ -355,7 +314,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit28]
+[Unit27]
 FileName=variable\variable.cpp
 CompileCpp=1
 Folder=components/variable
@@ -365,10 +324,40 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit29]
+[Unit28]
 FileName=variable\variable.h
 CompileCpp=1
 Folder=components/variable
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit30]
+FileName=math\builtin_mathematical_functions.cpp
+CompileCpp=1
+Folder=math
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit7]
+FileName=wavegen.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit29]
+FileName=math\run_function.cpp
+CompileCpp=1
+Folder=math
 Compile=1
 Link=1
 Priority=1000

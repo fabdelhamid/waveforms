@@ -199,13 +199,14 @@ void EvalCode (const string& context, unsigned int& line_number)
 		    	//if (!IsNumericValue ())
 		    	int loop_iterations = _stof (Eval (block_identifier));
 		    	
-                int x;
                 unsigned original_line_number = line_number;
-                for (x = 0; x < loop_iterations; x++)
+                while (loop_iterations)
                 {
                     line_number = original_line_number;
-             		EvalCode (block_code, line_number);            
-                } /* for - eval code n times*/
+             		EvalCode (block_code, line_number);  
+                     
+                    loop_iterations = _stof (Eval (block_identifier));          
+                } /* while - eval code  loop_iterations times*/
                 
             } /* else if  - loop*/
             
@@ -222,8 +223,6 @@ void EvalCode (const string& context, unsigned int& line_number)
 		{
 			string block_identifier = NextWord (context, l, line_number);
 			
-			cout << "context.at(l) `" <<  context.at(l)  << "'" << endl;				
-			cout << "context.at(SkipTwoWords) `" <<  context.at(delimiter_loc = SkipTwoWords (context, l))  << "'" << endl;	
 			error ("invalid block syntax for `" + block_identifier + "' ");
 		} /* else if */
 		
@@ -231,9 +230,6 @@ void EvalCode (const string& context, unsigned int& line_number)
 			Read one statement, skipping comments
 			*/	 	 	
 		statement = ReadOneStatement (context, l, line_number);
-
-
-
 		/*
 			Execute this statement 
 		*/
@@ -263,12 +259,17 @@ string ReadOneStatement (const string& context, location& l, unsigned int& line_
 		Copy from this location until next semi-colon ';' or end-of-line
 		`Next' will account for quoted delimiters and new lines 
 		*/
+		
+	bool inq = InAnyQuote(context,l);
 	while (l < context.length() && 
-			((context.at(l) != ';' && context.at(l) != '\n') || InAnyQuote(context, l)))
+			((context.at(l) != ';' && context.at(l) != '\n') || (inq)))
 	{
+        
+        inq = InAnyQuote(context,l);
 		result += context.at(l++);
-		l = Next (context, l, line_number);
-	} /* while */
+		if (!inq)
+    		l = Next (context, l, line_number);
+	} // while 
        
 	  
 	if (l < context.length() && context.at(l) == ';')

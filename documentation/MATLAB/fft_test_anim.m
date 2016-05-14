@@ -13,7 +13,7 @@ ylabel('X(t)')
 f = Fs*(0:(L/2))/L;
 
 inc = 0;
-
+o
 while 1<2
     f1 = 50;
     

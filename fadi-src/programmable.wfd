@@ -1,0 +1,11 @@
+% Sample programmable wave
+Waveform Programmable
+{
+	DC = 35 * 2;
+	
+	set  (0,    50);
+	setb (DC,   50);
+	seta (DC,  -50);
+	setb (100, -50);
+	
+} % Programmable

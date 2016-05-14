@@ -21,7 +21,6 @@ operator_t CmpOperator (const string &context, int l)
    for (ident i = 0; i < OPERATORS; i++)
      if (opsign[i].length() > 0 && Compare (opsign[i], context, l))
        return (operator_t) i;
-
    return (operator_t) 0;
  
 } /* CmpOperator */
@@ -46,11 +45,7 @@ function_t CmpFunction (const string &context, location l)
      		&&	((context.length() > l + funcname[i].length())
 		 			&& context.at (Next (context, l + funcname[i].length())) == '(')
 			  	 || (context == funcname[i]))
-			 
-			 
-			  
        return (function_t) i;
-
    return (function_t) 0;	
 	
 } /* CmpFunction */
@@ -67,7 +62,7 @@ block_t CmpBlock (const string &context, location l)
 
    return (block_t) 0;	
 	
-} /* CmpFunction */
+} /* CmpBlock */
 
   /////////////////////////////////////////////////////////////////
 

@@ -44,7 +44,8 @@ string* StripParameters (string &context);
 location Skip (const char d1, const char d2, const string &context, location l);
 list<string> SeparateOperands  (const string statement);
 list<string> SeparateArguments (const string &statement);
-string EnforceOperatorPrecedence (const string &context, location l);
+string EnforceOperatorPrecedence (const string& context_s);
+
 bool InQuote (const char delim, const string &context, location l);
 string StrFromTo (const string &context, location l1, location l2);
 bool IsNumber (const std::string& o_s);
@@ -102,13 +103,16 @@ string tostr(float t);
 #define InSQuote(c,l) InQuote ('\'',c,l)
 #define InAnyQuote(c,l) (InDQuote(c,l) || InSQuote(c,l))
 
+location NextOrPlus1 (const string&,location);
+
+
 #define SkipBrackets(c,l) Skip ('[',']',c,l)
 #define SkipCBrackets(c,l) Skip ('{','}',c,l)
 #define SkipParens(c,l)   Skip ('(',')',c,l)
 
+
 string StripParens     (const string&);
 string GetFunctionName (const string&);
-
 
 bool ListContains (const list <string>& l, const string& s);
 
@@ -135,8 +139,16 @@ void CheckLegalIdentifier (string);
 string GetFileName (const string& str);
 string GetFilePath (const string& str);
 
+// Enforces C-style precedence of different operators,
+// and converts them to function calls 
+string OperatorsToFunctionCalls (const string &statement);
 
 
-
-
-
+// from http://www.cplusplus.com/forum/articles/9645/
+template <typename T>
+string NumberToString ( T Number )
+{
+	stringstream ss;
+	ss << Number;
+	return ss.str();
+}

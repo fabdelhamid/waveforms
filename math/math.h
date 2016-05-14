@@ -76,13 +76,44 @@ const string opsign   [OPERATORS] =  {
 	">", 
 	"!",
 	"==", 
-	"="
+	"=",
 	"&&",
 	"&",
 	"||"
 	"|",
 	"INVE", 
 
+	};
+// Operator handler identifiers (used when converting operators 
+// to function calls 
+// These are then handled similar to internal 
+const string ophandler   [OPERATORS] =  {
+	"INV", 
+	"_OP_ADD_ASSIGN",      // "+=", 
+	"_OP_ADD",             // "+", 
+	"_OP_SUBTRACT_ASSIGN", // "-=", 
+	"_OP_SUBTRACT",        // "-",
+	"_OP_MULTIPLY_ASSIGN", // "*=",
+	"_OP_MULTIPLY",        // "*", 
+	"_OP_DIVIDE",          // "/", 
+	"_OP_RAISE",           // "^", 
+	"_OP_NOT_EQUAL",       // "<>", 
+	"_OP_ROTATE_LEFT",     // "<<<", 
+	"_OP_SHIFT_LEFT",      // "<<", 
+	"_OP_ROTATE_RIGHT",    // ">>>",
+	"_OP_SHIFT_RIGHT",           // ">>",
+	"_OP_LESS_THAN_OR_EQUAL",    // "<=", 
+	"_OP_LESS_THAN",             // "<", 
+	"_OP_GREATER_THAN_OR_EQUAL", // ">=", 
+	"_OP_GREATER_THAN",          // ">", 
+	"_OP_FACTORIAL",             // "!",
+	"_OP_EQUALS",                // "==", 
+	"_OP_ASSIGN",                // "=",
+	"_OP_LOGICAL_AND",           // "&&",
+	"_OP_BITWISE_AND",           // "&",
+	"_OP_LOGICAL_OR",   // "||"
+	"_OP_BITWISE_OR",   // "|",
+	"INVE",             // "INVE", 
 	};
 	
 enum function_t

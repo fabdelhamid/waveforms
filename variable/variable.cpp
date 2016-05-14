@@ -45,6 +45,13 @@ void variable_t::SetValue (const string& code)
 	code_evaluated = true;
 } // variable_t::SetValue 
 
+// Set name of a variable_t object
+void variable_t::SetName (const string& g_name)
+{
+	name = g_name;
+} // variable_t::SetName 
+
+
 // Returns current value (and not operation) of a variable
 string variable_t::Value() const
 {
@@ -54,3 +61,21 @@ string variable_t::Value() const
 //  Add new variable
 //void AddVariable (const string& name);
 
+// GetOrCreateVariable
+// Returns either a pointer to an existing variable or creates a new one 
+// if specified variable does not exist
+variable_t* GetOrCreateVariable (const string& name)
+{
+    variable_t* result = GetVariable (name);
+    
+    // Variable exists
+    if (result != NONE)
+        return result;
+        
+    // Variable does not exist; create new variable and push it.
+    variable_t new_variable;
+    new_variable.SetName (name);
+    variables.push_back (new_variable);
+        
+    return &(variables.back());
+} // GetOrCreateVariable

@@ -2,7 +2,7 @@
 // Global tables
 vector <waveform_t> waveforms;
 vector <sprite_t>   sprites;
-vector <sound_t>   sounds;
+vector <sound_t>    sounds;
 
 int currently_in_sprite_block;
 int currently_in_sound_block;
@@ -34,20 +34,24 @@ int main()
     currently_in_sound_block    = 0;
     currently_in_waveform_block = 0;
 	
+	
     /* Step 1: Read description */
     ReadFile ("F:\\cpp\\wavegen\\fadi-src\\main.wfd");
-  
+    
+    sprite_t* sts = GetSprite ("SquareToSawtooth");
+    sts->GetFrame (0);
+    
+    cout << " Will do something to SquareToSawtooth " << endl;
+    system ("pause");
+    exit (0);
+    
 	/* Test */
-	waveform_table_t square = *GetWaveformTable ("Hybrid", 440);
+	waveform_table_t square = *GetWaveformTable ("Programmable", 440 /* , time in ms */ );
 	
-	cout << "Cosine: " << square.data.size() << " points" << endl;
+	//cout << "Cosine: " << square.data.size() << " points" << endl;
 	for (int i = 0; i < square.data.size(); i++)
 		cout << i << ": " << square.data[i] << endl;
 
-//	GenerateAllWaveformFrequencyTables ();
-
-    system ("pause");
-    //return 0;
 
   /* Final step: write WAV file */
   ofstream f ( "example.wav", ios::binary );

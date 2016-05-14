@@ -1,3 +1,10 @@
+/*
+    sound_t objects should consist of:
+        (optional) intro sprite
+        pseudo-infinite loop
+        (optional) outro sprite
+*/
+
 class sound_t
 {
     public:
@@ -10,7 +17,7 @@ class sound_t
         void AddWaveform                 (waveform_t waveform, unsigned int time);
         void AddWaveformAtCurrentTime    (waveform_t waveform);        
         void RemoveWaveform              (waveform_t waveform, unsigned int time);
-
+        void Hold     (const timepoint_t);      
 
 	//	void MoveWavepoint   (const location_t wvpnt_location, const amplitude_t initial, const amplitude_t final, const timepoint_t time)    
 

@@ -78,14 +78,13 @@ using namespace std;
 #include "./timepoint/timepoint.h"
 #include "./an_string/an_string.h"
 #include "./error/error.h"
-#include "./sprite/sprite.h"
 #include "./render/render.h"
+#include "./sprite/sprite.h"
 #include "./waveform/waveform.h"
 #include "./function/function.h"
 #include "./variable/variable.h"
 #include "./sound/sound.h"
 #include "./math/math.h"
-
 
 // Maximum amplitude used when defining waveforms.
 #define SYNTAX_MAX_AMPLITUDE 50

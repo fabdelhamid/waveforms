@@ -74,7 +74,7 @@ waveform_table_t GenerateWaveformFrequencyTable (waveform_t& waveform, frequency
     // Final number of samples:
     // 1/freq * wav_sps
        
-    double dreq_sps  = (1/frequency) * wav_sps;
+    double dreq_sps  = (1/ (double) frequency) * (double) wav_sps;
     int req_sps = round (dreq_sps);
     waveform_table_t result = GenerateWaveformTable (waveform, req_sps);
     result.frequency = frequency;
@@ -104,8 +104,6 @@ waveform_table_t* GetWaveformTable (const string& identifier, const frequency_t 
     //	return NONE;
     
     waveform_tables.push_back(result);
-    
-    cout << "Returning from computation" << endl;    
     return &waveform_tables.back();
     
 } // GetWaveformTable
@@ -137,8 +135,6 @@ void  waveform_t::SetInterpolationMethod (const location_t loc, const string& me
 // Get interpolation method applicable to specified location
 string waveform_t::InterpolationMethod (location_t loc) const
 {
-
-
 	
 	// Go through all defined interpolation method declarations in waveform
 	for (int i = 0; i < interpolation_data.size(); i++ )
@@ -151,8 +147,7 @@ string waveform_t::InterpolationMethod (location_t loc) const
 		
 		if (loc == this_loc)
 		{
-            cout << "ret 1 " << interpolation_data[i].method << endl;
-			return interpolation_data[i].method;
+           	return interpolation_data[i].method;
         } // if
     
         // interpolation method defined at this_loc is applicable to current location (loc)

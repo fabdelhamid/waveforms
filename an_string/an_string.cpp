@@ -96,8 +96,18 @@ location Next (const string &str, location l)
 			&&  (str.at(l) == ' '
 					|| str.at(l) == '\n'
 					||  str.at(l) == '\r'
-					|| str.at(l) == '\t'))
-		l++;	 
+					|| str.at(l) == '\t'
+                    || str.at(l) == '%'))                    
+	{
+        if (str.at(l) == '%') 
+        {
+            l = NextLine (str, l);
+                
+            continue;
+        } /* if */
+        else        
+            l++;
+    } // while
 	return l;       
 } /* Next */
 
@@ -114,18 +124,20 @@ location Next (const string &str, location l, unsigned int& line_number)
 					|| str.at(l) == '\t'
                     || str.at(l) == '%'))                    
 	{
+
         if (str.at(l) == '\n') 
             line_number++;
 
         if (str.at(l) == '%') 
         {
             l = NextLine (str, l);
-            line_number++;
+                line_number++;
+                
             continue;
         } /* if */
         else        
             l++;
-    } /* while */
+    } // while
 	return l;       
 } /* Next */
 
@@ -280,27 +292,37 @@ location Skip (const char d1, const char d2, const string &context, location l)
 	
 
    if (i == context.length() && nests)
-     error ("Unended delimeter" + d1);
+     error ("Unbalanced delimeter " + d1);
 
    return i;
 	
 } /* Skip */
 
-
+// Finds out if a specific location inside a string is located within a quote.
 bool InQuote (const char delim, const string &context, location l)
 {
 	bool v = 0;
-    int i = 0;
-	for ( i = 0; i < context.length() && i < l; i++)
+    location  i = 0;
+    
+	for ( i = 0; i < context.length() && i < l;  i++)
 	{
-		if (context.at (i) == '\\')
+        
+    
+        
+		if (context.at(i) == '\\')
 			i++;
-		else if(context.at(i) == delim) 
-			v = !v;			
-	    i = Next (context, l);	
+			
+		else if (context.at(i) == delim)
+        {
+			v = !v;	
+			
+        } //else if
+        
+	    i = Next (context, i);	
 	} /* for */
+	
    return v;	
-} /* InQuote */
+} // InQuote
 
 /* 
    Modified to handle - and + prefixes
@@ -323,15 +345,26 @@ bool IsNumber (const std::string& o_s)
 list<string> SeparateArguments (const string &o_statement)
 {
 	list<string> result;
+
 	string statement = StripParens (o_statement);
 	if (!statement.length())
 		return result;
-		
+	
 	string argument = "";
 
-	for (int i = 0; i < statement.length(); i++)
+	for (location i = 0; i < statement.length(); i++)
 	{
-		if (statement.at(i) != ',') argument += statement.at(i);
+        if ((statement.at(i) == '(') && !InAnyQuote (statement, i))
+        {
+            location i_skip = SkipParens (statement, i) + 1;
+            argument += StrFromTo (statement, i, i_skip);
+            i = i_skip;
+            
+            continue;
+        } // if
+        
+		if (statement.at(i) != ',')
+            argument += statement.at(i);
 		else 
 		  {
 		  	result.push_back(argument); 
@@ -344,7 +377,6 @@ list<string> SeparateArguments (const string &o_statement)
 
 	return result;
 } /* SeparateArguments */
-
 
 
 list<string> OperandsOnly (const list<string>& all, unsigned int x)
@@ -368,7 +400,7 @@ list<string> OperandsOnly (const list<string>& all, unsigned int x)
 } /* OperandsOnly */
 
 
-list<string> OperatorsOnly (const list<string>& all, unsigned int)
+list<string> OperatorsOnly (const list<string>& all, unsigned int x)
 {
 	list <string> result;
 	for (list<string>::const_iterator o = all.begin(); o!= all.end(); o++)
@@ -405,7 +437,7 @@ void DeleteOnce (const string& key, list <string>& container)
   */
 list<string> SeparateOperands (const string statement)
 {
-	
+		
 	#define add_previous_operand() if (current_operand.length()) result.push_back(current_operand); current_operand = ""
 	
 	list<string> result;
@@ -417,10 +449,20 @@ list<string> SeparateOperands (const string statement)
 		
 		operator_t type;
 		function_t function;
-				
 		
+		// In quote; copy operand as is
+		if (InAnyQuote (statement, i))
+		{
+            do
+            {
+                current_operand += statement.at(i++);
+            } // do 
+            while (i < statement.length() && InAnyQuote (statement, i));
+            add_previous_operand();    
+        } // if - in a quote
+        
 	    /* detected a new operator */
-		if (type = CmpOperator (statement, i))
+		else if (type = CmpOperator (statement, i))
 		{
 			
 			add_previous_operand();	
@@ -459,7 +501,7 @@ list<string> SeparateOperands (const string statement)
 			
 				current_operand = "";
 				
-			} /* else if */
+			} // else if 
 
 			else
 			{
@@ -469,7 +511,7 @@ list<string> SeparateOperands (const string statement)
 
 			i += opsign[type].length() - 1;   // the -1 is to compensate for the i++ in the for loop
 			
-		} /* if */
+		} // if 
 
 		/* detected parens */
 		else if (statement.at(i) == '(')
@@ -478,7 +520,7 @@ list<string> SeparateOperands (const string statement)
 			i = SkipParens(statement, i);
 			current_operand += StrFromTo (statement, o_i, i+1);
 			
-		} /* else if */
+		} // else if 
 
 
 		/* detected function */
@@ -503,14 +545,15 @@ list<string> SeparateOperands (const string statement)
 			else
 			 {
                   result.push_back(funcname[function]);
-	  		 } /* else */						
-			/* skip paren's */
-		} /* else if */
+	  		 } // else 					
+			// skip paren's 
+		} // else if 
 		
 		else 	 	
 		{
 			current_operand += statement.at(i);
 		} /* else if */
+		
 		
 	} /* for */
 	
@@ -536,58 +579,130 @@ list<string> SeparateOperands (const string statement)
   
 } /* SeparateOperands */
 
-list<string> EnforceOperatorPrecedence (list<string> context, location l)
+// Used to fix some function that corrupt quotation
+location NextOrPlus1 (const string& context,location l)
 {
-             
-     list<string> final_list ;
-     
+    if (InAnyQuote (context,l))
+        return l+1;
+    else
+        return Next (context, l);    
+} //NextOrPlus1
+
+
+// Enforces C-style precedence of different operators,
+// and converts them to function calls 
+string OperatorsToFunctionCalls (const string &statement)
+{
+    
+	string statement_enf = EnforceOperatorPrecedence (statement);
+    
+    ///list <string> operands = SeparateOperands (statement);
+    list <string> operands = SeparateOperands (EnforceOperatorPrecedence (statement_enf));
+    
+    string operator_used;
+    
+    // We are only interested in [Operand] [Operator] [Operand] format.
+	if (operands.size() != 3 || !IsOperator (operator_used = *next(operands.begin())))
+		return statement_enf;
+		
+	//string operand_1 = operands.front(), operand_2 = operands.back(); 
+    
+    
+    
+    string result = ophandler[CmpOperator (operator_used, 0)] + \
+					"(" + OperatorsToFunctionCalls (operands.front()) + \
+				    "," + OperatorsToFunctionCalls (operands.back()) + ")";
+		
+	return result;
+} // OperatorsToFunctionCalls
+
+// Enforce C-style operator rules
+string EnforceOperatorPrecedence (const string& context_s)
+{
+    list <string> context = SeparateOperands (context_s);
+    
+   // if (context.size() == 1)
+   //     return context_s;
+    
+    
+     string final = "";
      
      for (list<string>::iterator i = context.begin(); i != context.end(); )
      {
-          
          
-         if (*(next(i)) == "*" or *(next(i)) == "/")
-           {    
-               string new_op = "(";       
-               while (i != context.end() && *(next(i)) == "*" or *(next(i)) == "/")
-                {
-                    new_op += *i++ + " ";
-                    new_op += *i++ + " ";              
-                } /* while */
-                   
-                new_op += ")";
-                   
-                final_list.push_back (new_op);
-                   
-           
-           } /* if */
-        else
-           {
-                final_list.push_back (*i++);
-                
-           } /* else */
-             
-     } /* for */
-     
-     
-     return final_list;
+         string next_op = *(next(i));
+         bool is_assign_op = EndsWith ("ASSIGN", ophandler[CmpOperator (next_op, 0)]);
+         
+         // an assignment operator will take all RHS as one operand
+         // x = y + z >> x = (y+z). 
+         if (is_assign_op)
+         {
+               string new_op = "(";
+               // first operand
+               new_op += *i++ + " ";
 
-	/* 
-	   pseudocode 
-	   
-	    *,/
-	     iterator through operands, adding operands to new_list
-	     
-	     if (operand + 1)  == * or /
-	       add parens or FUNCTION (operand + .... until last * or / in seriers ) as one operand to new list
-	       
-	       2 * 3 + e^-t
-	       
-	    if current_operand == ^ and operand + 1 == - /* taken care of by separandoperand */
-	             
-	       
-	   
-} /* EnforceOperatorPrecedence */
+               // operator
+               new_op += *i++ + " (";
+                              
+               while (i != context.end())
+                new_op += *i++ + " ";
+                
+               new_op += "))";
+
+               final += new_op;
+               
+           
+                
+         } // if - assignment operators
+         
+         // multiplication: taking all operands as long another multiplaction is found
+         
+         // division 
+         // z * x / y * z -> z * (x/y) * z
+         // z * x / y / z * v -> z * (x/(y/z)) * z
+         
+         else if (next_op == "*")
+         {
+               string new_op = "(";
+               // first operand
+               new_op += *i++ + " ";
+
+               // operator
+               new_op += *i++ + "(";
+                              
+               while (i != context.end() && *next(i) == /* "*" */  next_op)
+               {  
+                   // operand
+                   new_op += *i++ + " ";
+                   
+                   // operator
+                   if (i != context.end())
+                       new_op += *i++ + " ";
+               } // while
+               
+               // final operand
+               if (i != context.end())
+                       new_op += *i++ + " ";               
+               new_op += "))";
+               
+               final += new_op;
+        } // else - multiplication
+         
+        else
+        {
+           // final_list.push_back (*i++);        
+           final += (*i++);   
+        } // else          
+     } // for 
+
+    // TODO: implement this in better code
+   // if (final_list.size() == 1)
+    //    return SeparateOperands (StripWhitespaceBE (StripParens (final_list.front())));
+        
+        
+     return StripWhitespaceE (StripParens (final));
+    	   
+} // EnforceOperatorPrecedence 
 
 string StrFromTo (const string &context, location l1, location l2)
 {
@@ -611,7 +726,7 @@ string StripWhitespaceE (const string &context)
 /* Strip Whitespace from the beginning and the end */
 string StripWhitespaceBE (const string &context)
 {
-	
+    
    return StrFromTo (context, Next (context, 0), 1 + Prev (context, context.length()));
 } /* StripWhitespaceBE */
 
@@ -649,6 +764,10 @@ string tostr(float t) {
 	*/
 string StripParens (const string& formula)
 {
+    
+    if (formula == "()")
+        return "";
+        
 	int i      = Next (formula, 0);
 	int i_skip = SkipParens (formula, i);   
 	int i_end  = Next (formula, i_skip + 1);
@@ -994,8 +1113,6 @@ string GetFilePath (const string& str)
   found=str.find_last_of("/\\");
   return str.substr(0,found);
 } // GetFilePath 
-
-
 
 
 

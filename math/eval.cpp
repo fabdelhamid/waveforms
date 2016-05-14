@@ -20,6 +20,7 @@
 
 float NumEval  (const string& operation)
 {
+    
 	list <string> operands = SeparateOperands (operation);
 	
 	if (operands.size() == 1)
@@ -30,10 +31,7 @@ float NumEval  (const string& operation)
 				Todo: convert use run_function on operators
 				*/
 				
-			
-		    return _stof (operation);
-		    
-		    
+		    return _stof (operation);		    
 
 	} /* if - one operand*/
 	
@@ -62,23 +60,23 @@ float NumEval  (const string& operation)
 string Eval  (const string& o_operation)
 {
 
- 
-    string operation = o_operation; //really redundant
+    string operation = OperatorsToFunctionCalls (o_operation); //really redundant
     operation = StripWhitespaceBE (operation);
     operation = StripParens (operation);
-
     //auto operands = SeparateOperands (operation); operand count has to be one at this point
 
-	list <string> operands = SeparateOperands (o_operation);
+	list <string> operands = SeparateOperands (operation);
+	
+	
 	
 	if (operands.size() == 1)
-	{
-			
+	{		
+
         // literal value
         if (IsNumericValue (operation))
 		{
 		    return tostr (NumEval (operation)); //maybe return operation  directly
-		} /* if */
+		} // if
 		
 	    function_t fcode;
         string function_name = GetFunctionName(operation);
@@ -86,13 +84,30 @@ string Eval  (const string& o_operation)
          //function
         if (IsFunctionCall (operation))
         { 
+            SeparateArguments (StripB (function_name, operation));
     		return run_function (function_name, SeparateArguments (StripB (function_name, operation)));
-     	} /* if */
+     	} // if 
      	
 	 	
-        // only one operand at this point, either a symbol or unknown
-        return operation;
-	} /* if */
+        // only one operand at this point, which is a variable
+        if (IsVariable (operation))
+			return GetVariable (operands.front())-> Value ();
+
+		// check for Literals
+		// TODO: OperationType does so many unncessasry checks (for variables, waveforms, etc) 
+		//       its better to figure out some way to skip those checks
+		type_t optype = OperationType (operation);
+		if (optype == TYPE_TEXT or optype == TYPE_NUM)
+			return operation;
+			
+		// NaV: Not a value
+		if (operation == "NaV")
+			error ("operation did not return a valid value");
+			
+		// Unknown object
+		error ("object `" + operation + "' is unsupported.");        	
+		
+	} // if 
 	
 	else
 	{
@@ -116,7 +131,8 @@ string Eval  (const string& o_operation)
 			
 			
 		} /* for */
-
+		
+		
 		return StripE (" ", result);
 	} /* else */	 
 				

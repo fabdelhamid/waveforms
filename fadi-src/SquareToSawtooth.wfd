@@ -1,12 +1,20 @@
 Sprite SquareToSawtooth
 {
-	Loop (3) 
+	i = 0;
+	Loop (i < 3) 
 	{
 		Load  (Square);
-		Morph (Sawtooth, 9000ms);
-		Morph (Square,   9000ms);
+		Hold  (30);
+		
+		Morph (Sawtooth, 5000ms);
+		Morph (Square,   5000ms);
+		
+		% PRINTLN ("testing 1 2 3");
+		% PAUSE();
+		
+		i = i + 1;
 	} % Loop
 	
-	Morph (Silence, 9000ms);
+	%Morph (Silence, 9000ms);
 		
-} % Sprite
+} % SquareToSawtooth

@@ -1,9 +1,12 @@
 //  some functions to aid with constructing waveforms
 #define RENDER_H
+ class waveform_t;
+ class sprite_t;
  
 // table for rendering waveforms
 typedef struct {
     unsigned int num_samples; // optional?
+    timepoint_t time;         // for sprite-generated waveform table
     string name;
     frequency_t  frequency;
     vector <amplitude_t> data;

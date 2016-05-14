@@ -57,160 +57,11 @@ string run_function (const string function_name, const list<string>& arguments  
 	/*
 	  Action depending on function name 
 		*/
-
-	
-	/*
-		Time command i.e. new keyframe 
-		*/
-  
-	if (function_name == "time")
-	{
-		// Make sure argument count is correct
-		ASSERT_ARGCOUNT (1);
-		
-		
-		if (currently_in_sprite_block)
-			CURRENT_SPRITE.SetTime (_stof (argument_0));
-		else if (currently_in_sound_block)
-			CURRENT_SOUND.SetTime (_stof (argument_0));
-		else
-			error ("time command not allowed here");
-				
-	} /* if - time */
-	
-	
-	/* 
-		`set' command - set wavepoint value exactly at specified location
-		*/
-	else if (function_name == "set")
-	{
-         
-
-		// Make sure argument count is correct
-		ASSERT_ARGCOUNT (2);
-		
-		CURRENT_WAVEFORM.AddWavepoint (WAVEPOINT_AT ,   // type
-										atoi (arguments.front().c_str()),   // location
-										atoi (arguments.back().c_str()));	// value
-	} /* else - set */
-		
-	/* 
-		`setb' command - set wavepoint value at the insant after specified location
-		*/
-	else if (function_name == "setb")
-	{
-		// Make sure argument count is correct		
-		ASSERT_ARGCOUNT (2);
-		
-		CURRENT_WAVEFORM.AddWavepoint (WAVEPOINT_BEFORE,   // type
-										_stof (EvalSQ (arguments.front())),   // location
-										_stof (EvalSQ (arguments.back())));	// value			
-	} /* else - setb */
-		
-
-	/* 
-		`seta' command - set wavepoint value at the insant after specified location
-		*/
-	else if (function_name == "seta")
-	{
-		// Make sure argument count is correct		
-		ASSERT_ARGCOUNT (2);
-	    AssertArgtype (arguments.front(), TYPE_NUM);
-	    AssertArgtype (arguments.back(),  TYPE_NUM);
-		
-		CURRENT_WAVEFORM.AddWavepoint (WAVEPOINT_AFTER,   // type
-										_stof (EvalSQ (arguments.front())),   // location
-										_stof (EvalSQ (arguments.back())));	// value			
-	} /* else - seta */
-
-	/* 
-		`setmethod' command - set interpolation method
-		*/
-	else if (function_name == "setmethod")
-	{
-		// Make sure argument count is correct		
-		ASSERT_ARGCOUNT (2);
-	    AssertArgtype (arguments.front(), TYPE_NUM);   // location
-	    AssertArgtype (arguments.back(),  TYPE_TEXT);  // method
-		
-		CURRENT_WAVEFORM.SetInterpolationMethod (_stof (EvalSQ (arguments.front())),   // location
-           									   	    EvalSQ (arguments.back()));	// interpolation method			
-	} /* else - setmethod */
-
-	
-	
-	/* 
-		`morph' command - morph a waveform to another in a sprite or sound container.
-		*/
-	else if (function_name == "Morph")
-	{
-		// Make sure argument count is correct		
-		ASSERT_ARGCOUNT (2);
-		
-		list<string>::const_iterator arg = arguments.begin();
-
-		waveform_t* final     = GetWaveform  (*arg++);
-		timepoint_t time      = GetTimepoint (*arg)  ;
-
-
-		if (currently_in_sprite_block)
-			CURRENT_SPRITE.MorphTo (final, time);
-		else if (currently_in_sound_block)
-			CURRENT_SPRITE.MorphTo (final, time);
-		else
-			error (function_name + " command not allowed here");
-					
-		
-	} /* else - Morph */	
-
-	/* 
-		`Load' command 
-		*/
-	else if (function_name == "Load")
-	{
-		// Make sure argument count is correct		
-		ASSERT_ARGCOUNT (1);
-		
-		list<string>::const_iterator arg = arguments.begin();
-
-		waveform_t* final     = GetWaveform  (*arg++);
-
-
-		if (currently_in_sprite_block)
-			CURRENT_SPRITE.Load (final);
-		else if (currently_in_sound_block)
-			CURRENT_SPRITE.Load (final);
-		else
-			error (function_name + " command not allowed here");
-					
-		
-	} /* else - Load */	
-
-
-	/* 
-		`Include' command 
-		*/
-	else if (function_name == "include")
-	{
-		// Make sure argument count is correct		
-		ASSERT_ARGCOUNT (1);
-		
-		list<string>::const_iterator arg = arguments.begin();
-
-		string path = EvalSQ (*arg++);
-
-        // Include is not allowed inside any blocks
-		if (currently_in_any_block)
-			error (function_name + " command not allowed here");
-		
-		ReadFile (path);
-		
-		
-        //error (function_name + " command not supported yet.");
-					
-		
-	} /* else - include */	
-
+ 
+#include "builtin_methods.cpp"   // set,seta,setb,...
+#include "builtin_operators.cpp" // +,-,...
+#include "builtin_mathematical_functions.cpp" // sin,cos,...
+#include "builtin_commands.cpp" // print, println, ...
 
 	//  REMOVED: `rem' command was removed
 	
@@ -220,10 +71,16 @@ string run_function (const string function_name, const list<string>& arguments  
 		*/
 	else
 	{
-		error ("Unknown function `" + function_name + "' ");
+		// System function
+		if (BeginsWith ("_OP", function_name))
+			error ("internal command " + function_name + " is not supported by this build");
+		else
+			error ("unknown function `" + function_name + "' ");
+		
+			
 	} /* else */
 	
-	return "";
+	return "NaV";
 	
 	/*******************************************************************/		       
     switch (fcode)
@@ -340,10 +197,7 @@ string run_function (const string function_name, const list<string>& arguments  
                        
                   } /* else */      
            
-
            ////////////////////////////////////////////////////////////
-
-
 
            case FN_EXP:
            
