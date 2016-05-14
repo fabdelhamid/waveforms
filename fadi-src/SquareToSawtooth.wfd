@@ -3,7 +3,7 @@ Sprite SquareToSawtooth
 	i = 0;
 	Loop (i < 3) 
 	{
-		Load  (Square);
+		Load  (Sawtooth);
 		Hold  (30);
 		
 		Morph (Sawtooth, 5000ms);

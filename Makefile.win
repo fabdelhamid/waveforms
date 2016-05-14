@@ -1,7 +1,7 @@
 # Project: WaveGeneration
 # Compiler: Default GCC compiler
 # Compiler Type: MingW 3
-# Makefile created by wxDev-C++ IDE 7.4.2.569 on 12/05/16 06:09
+# Makefile created by wxDev-C++ IDE 7.4.2.569 on 14/05/16 03:37
 
 WXLIBNAME = wxmsw29u
 CPP       = g++.exe
@@ -9,14 +9,14 @@ CC        = gcc.exe
 WINDRES   = "windres.exe"
 OBJ       = Default\ Profile/wavegen.o Default\ Profile/an_string.o Default\ Profile/eval.o Default\ Profile/math.o Default\ Profile/error.o Default\ Profile/waveform.o Default\ Profile/sprite.o Default\ Profile/sound.o Default\ Profile/timepoint.o Default\ Profile/types.o Default\ Profile/ReadFile.o Default\ Profile/function.o Default\ Profile/render.o Default\ Profile/interpolation.o Default\ Profile/dft.o Default\ Profile/variable.o Default\ Profile/run_function.o
 LINKOBJ   = "Default Profile/wavegen.o" "Default Profile/an_string.o" "Default Profile/eval.o" "Default Profile/math.o" "Default Profile/error.o" "Default Profile/waveform.o" "Default Profile/sprite.o" "Default Profile/sound.o" "Default Profile/timepoint.o" "Default Profile/types.o" "Default Profile/ReadFile.o" "Default Profile/function.o" "Default Profile/render.o" "Default Profile/interpolation.o" "Default Profile/dft.o" "Default Profile/variable.o" "Default Profile/run_function.o"
-LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib"  -fmessage-length=0 
+LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib"  -g3 -fmessage-length=0 
 INCS      = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
 CXXINCS   = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/" -I"C:/Program Files (x86)/Dev-Cpp/include/common"
 RCINCS    = --include-dir "C:/PROGRA~2/Dev-Cpp/include/common"
 BIN       = Default Profile/WaveGeneration.exe
 DEFINES   = 
-CXXFLAGS  = $(CXXINCS) $(DEFINES)   -fmessage-length=0
-CFLAGS    = $(INCS) $(DEFINES)   -fmessage-length=0
+CXXFLAGS  = $(CXXINCS) $(DEFINES)   -g3 -fmessage-length=0
+CFLAGS    = $(INCS) $(DEFINES)   -g3 -fmessage-length=0
 GPROF     = gprof.exe
 ifeq ($(OS),Windows_NT)
    RM = del /Q
@@ -36,53 +36,53 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(LINK) $(LINKOBJ) -o "$(BIN)" $(LIBS) 
 
-Default\ Profile/wavegen.o: $(GLOBALDEPS) wavegen.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/wavegen.o: $(GLOBALDEPS) wavegen.cpp
 	$(CPP) -c wavegen.cpp -o "Default Profile/wavegen.o" $(CXXFLAGS)
 
-Default\ Profile/an_string.o: $(GLOBALDEPS) an_string/an_string.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/an_string.o: $(GLOBALDEPS) an_string/an_string.cpp
 	$(CPP) -c an_string/an_string.cpp -o "Default Profile/an_string.o" $(CXXFLAGS)
 
-Default\ Profile/eval.o: $(GLOBALDEPS) math/eval.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/eval.o: $(GLOBALDEPS) math/eval.cpp
 	$(CPP) -c math/eval.cpp -o "Default Profile/eval.o" $(CXXFLAGS)
 
-Default\ Profile/math.o: $(GLOBALDEPS) math/math.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/math.o: $(GLOBALDEPS) math/math.cpp
 	$(CPP) -c math/math.cpp -o "Default Profile/math.o" $(CXXFLAGS)
 
-Default\ Profile/error.o: $(GLOBALDEPS) error/error.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/error.o: $(GLOBALDEPS) error/error.cpp
 	$(CPP) -c error/error.cpp -o "Default Profile/error.o" $(CXXFLAGS)
 
-Default\ Profile/waveform.o: $(GLOBALDEPS) waveform/waveform.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/waveform.o: $(GLOBALDEPS) waveform/waveform.cpp
 	$(CPP) -c waveform/waveform.cpp -o "Default Profile/waveform.o" $(CXXFLAGS)
 
-Default\ Profile/sprite.o: $(GLOBALDEPS) sprite/sprite.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/sprite.o: $(GLOBALDEPS) sprite/sprite.cpp
 	$(CPP) -c sprite/sprite.cpp -o "Default Profile/sprite.o" $(CXXFLAGS)
 
-Default\ Profile/sound.o: $(GLOBALDEPS) sound/sound.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/sound.o: $(GLOBALDEPS) sound/sound.cpp
 	$(CPP) -c sound/sound.cpp -o "Default Profile/sound.o" $(CXXFLAGS)
 
-Default\ Profile/timepoint.o: $(GLOBALDEPS) timepoint/timepoint.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/timepoint.o: $(GLOBALDEPS) timepoint/timepoint.cpp
 	$(CPP) -c timepoint/timepoint.cpp -o "Default Profile/timepoint.o" $(CXXFLAGS)
 
-Default\ Profile/types.o: $(GLOBALDEPS) math/types.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/types.o: $(GLOBALDEPS) math/types.cpp
 	$(CPP) -c math/types.cpp -o "Default Profile/types.o" $(CXXFLAGS)
 
-Default\ Profile/ReadFile.o: $(GLOBALDEPS) main/ReadFile.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/ReadFile.o: $(GLOBALDEPS) main/ReadFile.cpp
 	$(CPP) -c main/ReadFile.cpp -o "Default Profile/ReadFile.o" $(CXXFLAGS)
 
-Default\ Profile/function.o: $(GLOBALDEPS) function/function.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/function.o: $(GLOBALDEPS) function/function.cpp
 	$(CPP) -c function/function.cpp -o "Default Profile/function.o" $(CXXFLAGS)
 
-Default\ Profile/render.o: $(GLOBALDEPS) render/render.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/render.o: $(GLOBALDEPS) render/render.cpp
 	$(CPP) -c render/render.cpp -o "Default Profile/render.o" $(CXXFLAGS)
 
-Default\ Profile/interpolation.o: $(GLOBALDEPS) math/interpolation.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/interpolation.o: $(GLOBALDEPS) math/interpolation.cpp
 	$(CPP) -c math/interpolation.cpp -o "Default Profile/interpolation.o" $(CXXFLAGS)
 
-Default\ Profile/dft.o: $(GLOBALDEPS) math/DSP/dft.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/dft.o: $(GLOBALDEPS) math/DSP/dft.cpp
 	$(CPP) -c math/DSP/dft.cpp -o "Default Profile/dft.o" $(CXXFLAGS)
 
-Default\ Profile/variable.o: $(GLOBALDEPS) variable/variable.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h
+Default\ Profile/variable.o: $(GLOBALDEPS) variable/variable.cpp
 	$(CPP) -c variable/variable.cpp -o "Default Profile/variable.o" $(CXXFLAGS)
 
-Default\ Profile/run_function.o: $(GLOBALDEPS) math/run_function.cpp wavegen.h math/types.h timepoint/timepoint.h an_string/an_string.h error/error.h render/render.h sprite/sprite.h waveform/waveform.h function/function.h variable/variable.h sound/sound.h math/math.h math/builtin_methods.cpp math/builtin_operators.cpp math/builtin_mathematical_functions.cpp math/builtin_commands.cpp
+Default\ Profile/run_function.o: $(GLOBALDEPS) math/run_function.cpp
 	$(CPP) -c math/run_function.cpp -o "Default Profile/run_function.o" $(CXXFLAGS)

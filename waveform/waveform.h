@@ -79,7 +79,7 @@ waveform_t* GetWaveform (const string& identifier);
 /*
      Final wrapper to get a waveform table given a specific frequency from cached list
      */
-waveform_table_t* GetWaveformTable (const string& identifier, const frequency_t);
+waveform_table_t GetWaveformTable (const string& identifier, const frequency_t);
 
 
 list<wavepoint_t>::const_iterator  next (list<wavepoint_t>::const_iterator a);

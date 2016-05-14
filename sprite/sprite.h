@@ -48,6 +48,11 @@ class sprite_t
         // Accessors for framerate
         void SetFrameRate (const double);
         double FrameRate () const;
+
+        // Accessors for frequency
+        void SetFreq (const frequency_t);
+        frequency_t Freq () const;
+
         
         vector <waveform_table_t> Render (const double); 
         // Note: Render (const timepoint_t length)  is only available for sound_t objects
@@ -65,9 +70,10 @@ class sprite_t
 		list <waveform_t> waveforms;        
         list <unsigned int> waveform_time;
         
-        list <action_t> actions;
+        vector <action_t> actions;
         
         double framerate;  
+        frequency_t freq;
         
         string name;
 }; /* sprite_t */

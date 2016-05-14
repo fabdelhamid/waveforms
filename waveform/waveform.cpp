@@ -84,27 +84,33 @@ waveform_table_t GenerateWaveformFrequencyTable (waveform_t& waveform, frequency
 } // GenerateWaveformFrequencyTable
 
 // Final wrapper to get a waveform table given a specific frequency from cached list
-waveform_table_t* GetWaveformTable (const string& identifier, const frequency_t frequency)
+waveform_table_t GetWaveformTable (const string& identifier, const frequency_t frequency)
 {
-    
+    /*
     for (int i = 0; i < waveform_tables.size(); i++)
     {
         if (waveform_tables[i].name == identifier && waveform_tables[i].frequency == frequency)
         {
-           cout << "Returning from cache" << endl;
            return &waveform_tables[i];
         } // if
     } // for
+    */
 
     // Waveform table does not exist in cache; recompute it
-    waveform_table_t result = GenerateWaveformFrequencyTable (*GetWaveform (identifier), frequency);
+    waveform_table_t result  = GenerateWaveformFrequencyTable (*GetWaveform (identifier), frequency);
+    return result;
     
+    /*
+        TODO: NOTE: caching cannot be used until smaple length averaging is
+        implemented properly
+    */
     // Errorneous waveform specified
     //if (result == NONE)
     //	return NONE;
-    
+    /*
     waveform_tables.push_back(result);
     return &waveform_tables.back();
+    */
     
 } // GetWaveformTable
 

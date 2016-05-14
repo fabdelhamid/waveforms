@@ -57,11 +57,11 @@ void sprite_t::DoAction (action_t& action)
 } // sprite_t::DoAction
 
 
+// Accessors for frame rate
 void sprite_t::SetFrameRate (const double fr)
 {
     framerate = fr;
-    frames.clear ();
-    
+    frames.clear ();    
 } // sprite_t::SetFrameRate
 
 double sprite_t::FrameRate () const
@@ -69,19 +69,57 @@ double sprite_t::FrameRate () const
     return framerate;
 } // sprite_t::FrameRate
 
+// Accessors for frequency
+void sprite_t::SetFreq (const frequency_t f)
+{
+    freq = f;
+    frames.clear ();    
+} // sprite_t::SetFreq
+
+frequency_t sprite_t::Freq () const
+{
+    return freq;
+} // sprite_t::Freq
+
+
 waveform_table_t sprite_t::GetFrame (const timepoint_t& tp)
 {
+    
+    waveform_table_t result;
+    //   What to do:
+    
     /*
-        What to do:
-            - Go through actions, executing them (i.e. rendering frames), 
+              Go through actions, executing them (i.e. rendering frames), 
               until next action is after specified timepoint. Compute 
               timepoint of last action based on arguments of ecountered Morph 
-              and Hold commands. Now check that last action:
-              
-            - If last action was a Load, result waveform(_table_t) is that
+              and Hold commands. Now check that last action.
+                    
+              Obviously an exception is when tp = 0, in which case the action
+              to take is to load the waveform (normally a load action)
+    */
+    if (tp == 0)
+    {
+        // Make sure first action is a load
+        if(actions[0].action != ACTION_LOAD)
+            error ("first acion in sprite must be a load");
+             
+        cout << "Got a load!! wf=`" << actions[0].waveform->Name() << "' " << endl;
+        
+        return GenerateWaveformFrequencyTable (*actions[0].waveform, this->freq);
+
+    } //if
+    else
+        error ("sprite@tp>0 not supported yet."); 
+        
+    timepoint_t timepoint_of_last_action;        
+      
+    /*              
+              If last action was a Load, result waveform(_table_t) is that
               waveform.
-            
-            - If last action was a Morph, then construct a waveform(_table_t) in 
+    */
+    
+    /*            
+              If last action was a Morph, then construct a waveform(_table_t) in 
               which every point is the interpolation of the initial and final
               waveforms, at current location. In other words, it's a 
               waveform_table_t y2, where,
