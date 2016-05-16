@@ -1,7 +1,7 @@
 # Project: WaveGeneration
 # Compiler: Default GCC compiler
 # Compiler Type: MingW 3
-# Makefile created by wxDev-C++ IDE 7.4.2.569 on 14/05/16 03:37
+# Makefile created by wxDev-C++ IDE 7.4.2.569 on 16/05/16 05:13
 
 WXLIBNAME = wxmsw29u
 CPP       = g++.exe
@@ -9,14 +9,14 @@ CC        = gcc.exe
 WINDRES   = "windres.exe"
 OBJ       = Default\ Profile/wavegen.o Default\ Profile/an_string.o Default\ Profile/eval.o Default\ Profile/math.o Default\ Profile/error.o Default\ Profile/waveform.o Default\ Profile/sprite.o Default\ Profile/sound.o Default\ Profile/timepoint.o Default\ Profile/types.o Default\ Profile/ReadFile.o Default\ Profile/function.o Default\ Profile/render.o Default\ Profile/interpolation.o Default\ Profile/dft.o Default\ Profile/variable.o Default\ Profile/run_function.o
 LINKOBJ   = "Default Profile/wavegen.o" "Default Profile/an_string.o" "Default Profile/eval.o" "Default Profile/math.o" "Default Profile/error.o" "Default Profile/waveform.o" "Default Profile/sprite.o" "Default Profile/sound.o" "Default Profile/timepoint.o" "Default Profile/types.o" "Default Profile/ReadFile.o" "Default Profile/function.o" "Default Profile/render.o" "Default Profile/interpolation.o" "Default Profile/dft.o" "Default Profile/variable.o" "Default Profile/run_function.o"
-LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib"  -g3 -fmessage-length=0 
+LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib"  -fmessage-length=0 
 INCS      = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
 CXXINCS   = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/" -I"C:/Program Files (x86)/Dev-Cpp/include/common"
 RCINCS    = --include-dir "C:/PROGRA~2/Dev-Cpp/include/common"
 BIN       = Default Profile/WaveGeneration.exe
 DEFINES   = 
-CXXFLAGS  = $(CXXINCS) $(DEFINES)   -g3 -fmessage-length=0
-CFLAGS    = $(INCS) $(DEFINES)   -g3 -fmessage-length=0
+CXXFLAGS  = $(CXXINCS) $(DEFINES)   -fmessage-length=0
+CFLAGS    = $(INCS) $(DEFINES)   -fmessage-length=0
 GPROF     = gprof.exe
 ifeq ($(OS),Windows_NT)
    RM = del /Q

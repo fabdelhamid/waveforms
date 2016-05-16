@@ -8,8 +8,8 @@
 class sound_t
 {
     public:
-        void SetTime(unsigned int);     /* Set waveform timestamp */
-        unsigned int Time() const;      /* Read waveform timestamp */        
+        void SetTime(timepoint_t);     /* Set waveform timestamp */
+        timepoint_t Time() const;      /* Read waveform timestamp */        
         
         /*
         	Adding and removing waveform

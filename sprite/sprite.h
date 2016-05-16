@@ -1,6 +1,8 @@
 #define SPRITE_H 
 #define SPRITE_DEF_FR 100 // default frame rate for new sprites, in waveform_table_t /second
-
+#define DBL_PRECISION_THOLD 0.0001      //Accuracy threshold for double precision, in milliseconds. 
+                                        // In theory affects maximum sample rate possible, but the effect is small enough
+                                        // to be safely ignored.
 /*
     class sprite_t
         "animated" sound objects
@@ -25,6 +27,7 @@ typedef struct {
 	action_type_t   action;
   	   waveform_t*  waveform;
 	  timepoint_t   length;
+	  timepoint_t   timepoint;
 	  amplitude_t   amplitude;
 } action_t;
 
@@ -42,9 +45,10 @@ class sprite_t
         // amplitude_t GetAmplitudeAtlocation (const location_t wvpnt_location) const;       
         void MorphTo  (waveform_t* final, timepoint_t length);
         void Load     (waveform_t* final);    
-        void Hold     (const timepoint_t);         
-        void DoAction (action_t&);
-        
+        void Hold     (const timepoint_t);
+        void RecordAction  (action_t&);
+        waveform_table_t GetActionWaveformTable (const unsigned int i, const timepoint_t tp_of_interest, frequency_t freq);     
+   
         // Accessors for framerate
         void SetFrameRate (const double);
         double FrameRate () const;
@@ -66,8 +70,8 @@ class sprite_t
         
     private:  
         vector <waveform_table_t> frames;
-        timepoint_t time;
-		list <waveform_t> waveforms;        
+        timepoint_t         time;
+		list <waveform_t>   waveforms;        
         list <unsigned int> waveform_time;
         
         vector <action_t> actions;

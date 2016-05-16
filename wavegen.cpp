@@ -34,14 +34,20 @@ int main()
     currently_in_waveform_block = 0;
 	
     // Step 1: Read description 
-    ReadFile ("F:\\cpp\\wavegen\\fadi-src\\main.wfd");
+    ReadFile ("F:/cpp/wavegen/fadi-src/main.wfd");
 
 	// Sprite Test 
     sprite_t* sts = GetSprite ("SquareToSawtooth");
     sts->SetFreq (440);
-
-    waveform_table_t square = sts->GetFrame (0);
     
+    waveform_table_t square;
+
+    for (timepoint_t x = 0; ;x += 0.2)
+    {
+        cout << "Testing frame " << x << "\t";
+        square = sts->GetFrame (x);
+        cout << "OK" << endl;
+    } // for    
 	// Waveform Test 
     //	waveform_table_t square = *GetWaveformTable ("Programmable", 440 /* , time in ms */ );
             

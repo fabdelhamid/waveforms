@@ -1,6 +1,6 @@
 #define TIMEPOINT_H
 
-#define timepoint_t unsigned int
+#define timepoint_t double
 
 
 timepoint_t GetTimepoint (const string& identifier);
