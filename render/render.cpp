@@ -95,3 +95,22 @@ vector <amplitude_t> InterploateWavepoints (const location_t from, const locatio
        return result;       
 } // InterploateWavepoints
 
+// Generate a linear interpolation of two waveforms, using the linear method
+waveform_table_t LinearWaveformInterpolation (const timepoint_t x1,
+                                                const timepoint_t x2,
+                                                  const timepoint_t x3,
+                                                    waveform_t* wf1, waveform_t*  wf2, const frequency_t freq)
+                                                    
+{
+    
+    waveform_table_t wvt1 = GenerateWaveformFrequencyTable (*wf1, freq);
+    waveform_table_t wvt2 = GenerateWaveformFrequencyTable (*wf2, freq);
+    
+    // TODO: support interpolating two waveforms of different sizes
+    if (wvt1.data.size() != wvt2.data.size())
+        error ("cannot interpolate two waveforms of different sizes");
+    
+    cout << "will process morph" << endl;
+    system ("pause");
+    exit (0);
+} // LinearWaveformInterpolation

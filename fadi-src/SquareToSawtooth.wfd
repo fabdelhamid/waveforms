@@ -4,7 +4,7 @@ Sprite SquareToSawtooth
 	%Loop (i < 3) 
 	%{
 		Load  (Sawtooth);
-		Hold  (3000);
+		Hold  (30);
 		
 		Morph (Sawtooth, 5000ms);
 		Morph (Square,   5000ms);

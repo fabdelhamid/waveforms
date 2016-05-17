@@ -144,6 +144,38 @@ waveform_table_t sprite_t::GetFrame (const timepoint_t& tp)
               waveform.
     */
     
+    
+    cout <<  Name() << ": Will attempt to get frame at time " << tp << endl;
+    cout << "action size: " << actions.size() << endl;
+    
+    system ("pause");
+    exit (0);
+} // sprite_t::GetFrame
+
+// Compute waveform table for a given action
+waveform_table_t sprite_t::GetActionWaveformTable (const unsigned int i, const timepoint_t tp_of_interest, frequency_t freq)
+{
+    waveform_table_t result;
+    unsigned int last_relevant_i ;
+
+    // For interpolation
+    waveform_t* last_rel_wf;
+    waveform_t* next_wf; 
+    
+    switch (actions[i].action)
+    {
+        case ACTION_LOAD:
+            return GenerateWaveformFrequencyTable (*actions[i].waveform, freq);
+                
+        case ACTION_HOLD:
+            
+            // TODO: support for successive Holds
+            if (i == 0 || (actions[i-1].action != ACTION_LOAD &&
+                                actions[i-1].action != ACTION_MORPH)) 
+                error ("invalid mode for Hold command");
+           
+            return GenerateWaveformFrequencyTable (*actions[i-1].waveform, freq);
+
     /*            
               If last action was a Morph, then construct a waveform(_table_t) in 
               which every point is the interpolation of the initial and final
@@ -162,37 +194,28 @@ waveform_table_t sprite_t::GetFrame (const timepoint_t& tp)
                 
                 Interpolation method could optionally be user-specified.
     */
-    
-    cout <<  Name() << ": Will attempt to get frame at time " << tp << endl;
-    cout << "action size: " << actions.size() << endl;
-    
-    system ("pause");
-    exit (0);
-} // sprite_t::GetFrame
 
-// Compute waveform table for a given action
-waveform_table_t sprite_t::GetActionWaveformTable (const unsigned int i, const timepoint_t tp_of_interest, frequency_t freq)
-{
-    waveform_table_t result;
-    
-    switch (actions[i].action)
-    {
-        case ACTION_LOAD:
-            return GenerateWaveformFrequencyTable (*actions[i].waveform, freq);
-                
-        case ACTION_HOLD:
-            
-            // TODO: support for successive Holds
-            if (i == 0 || (actions[i-1].action != ACTION_LOAD &&
-                                actions[i-1].action != ACTION_MORPH)) 
-                error ("invalid mode for Hold command");
-           
-            return GenerateWaveformFrequencyTable (*actions[i-1].waveform, freq);
             
         case ACTION_MORPH:
-            error ("sprite_t::GetActionWaveformTable: MORPH method not supported yet");
-            break;
             
+            timepoint_t x1,x2,x3;
+            amplitude_t y1,y2,y3;
+            
+            last_relevant_i =  i-1;
+        
+            // skip `Hold' commands
+            while (last_relevant_i && actions[last_relevant_i].action == ACTION_HOLD)
+                last_relevant_i--;
+            
+            x1 = 0; //actions[last_relevant_i].timepoint;
+            x2 = tp_of_interest - actions[i].timepoint;
+            x3 = actions[i].length;
+          
+            last_rel_wf = actions[last_relevant_i].waveform;
+            next_wf = actions[i].waveform;
+            
+            return LinearWaveformInterpolation (x1,x2,x3, last_rel_wf, next_wf, freq);
+                
         default:
             error ("unsupported action");
     } // switch

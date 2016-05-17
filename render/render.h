@@ -15,7 +15,13 @@ typedef struct {
 
 waveform_table_t GenerateWaveformTable (const waveform_t& input, const unsigned int samples);
 waveform_table_t GenerateWaveformTable (const   sprite_t& input, const timepoint_t time);
-waveform_table_t GenerateMorphWaveformTable (const waveform_t& wv1, const waveform_t& wv2, double ratio);
+//waveform_table_t GenerateMorphWaveformTable (const waveform_t& wv1, const waveform_t& wv2, double ratio);
+
+// Generate a linear interpolation of two waveforms, using the linear method
+waveform_table_t LinearWaveformInterpolation (const timepoint_t x1,
+                                                const timepoint_t x2,
+                                                  const timepoint_t x3,
+                                                     waveform_t* last_rel_wf,  waveform_t*  next_wf, const frequency_t freq);
 
 // table for rendering sprites
 typedef struct {
