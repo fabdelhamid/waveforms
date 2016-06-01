@@ -16,9 +16,9 @@ timepoint_t GetTimepoint (const string& identifier)
 
 
 	//s format
-	if (EndsWith ("s", identifier) && IsNumericValue (StripE ("ms",identifier)))
+	if (EndsWith ("s", identifier) && IsNumericValue (StripE ("s",identifier)))
 	{
-		result = _stof (StripE("ms",identifier)) * 1000;
+		result = _stof (StripE("s",identifier)) * 1000;
 		return result;
 				
 	} // if 

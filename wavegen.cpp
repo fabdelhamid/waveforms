@@ -3,10 +3,12 @@
 vector <waveform_t> waveforms;
 vector <sprite_t>   sprites;
 vector <sound_t>    sounds;
+vector <score_t>    scores;
 
 int currently_in_sprite_block;
 int currently_in_sound_block;
 int currently_in_waveform_block;
+int currently_in_score_block;
 
 unsigned  short  wav_channels, wav_sps, wav_bpsample;  
 namespace little_endian_io
@@ -32,33 +34,32 @@ int main()
     currently_in_sprite_block   = 0;
     currently_in_sound_block    = 0;
     currently_in_waveform_block = 0;
+    currently_in_score_block    = 0;
 	
     // Step 1: Read description 
-    ReadFile ("F:/cpp/wavegen/fadi-src/main.wfd");
+    ReadFile ("C:/usbtmpstorage/cpp/wavegen/fadi-src/main.wfd");
 
 	// Sprite Test 
     sprite_t* sts = GetSprite ("SquareToSawtooth");
     sts->SetFreq (440);
-    
-    waveform_table_t square;
+    sprite_table_t sprite_table = GenerateSpriteTable (*sts, 3);
 
-    for (timepoint_t x = 0; ;x += 0.2)
+
+/*
+    for (unsigned int i = 0; i < sprite_table.data.size(); i++)
     {
-        cout << "Testing frame " << x << "\t";
-        square = sts->GetFrame (x);
+        cout << "Testing frame " << i << "\t";
+        square = sprite_table.data[i];        
         cout << "OK" << endl;
-    } // for    
-	// Waveform Test 
-    //	waveform_table_t square = *GetWaveformTable ("Programmable", 440 /* , time in ms */ );
-            
-	//cout << "Cosine: " << square.data.size() << " points" << endl;
-	for (int i = 0; i < square.data.size(); i++)
-		cout << i << ": " << square.data[i] << endl;
-    
-    cout << " Will do something to SquareToSawtooth " << endl;
-    system ("pause");
-    exit (0);
 
+		for (int i = 0; i < square.data.size(); i++)
+			cout << square.data[i] << " ";
+			
+		cout << endl << endl;
+			        
+    } // for    */
+    
+    
   // Final step: write WAV file 
   ofstream f ( "example.wav", ios::binary );
 
@@ -82,18 +83,18 @@ int main()
   constexpr double max_amplitude = 32760;  // "volume"
 
   double hz          = 44100;   // samples per second
-  double frequency_1 =  880;    //261.626;  // middle C
+  double frequency_1 = 880;    //261.626;  // middle C
   double frequency_2 = 1000;
   double seconds     = 2.5;     // time
 
-  for (int i = 0; i < 100; i++)
+  for (int i = 0; i < sprite_table.data.size(); i++)
   {
-	  int N =  square.data.size(); //  hz * seconds;  // total number of samples
+	  int N =  sprite_table.data[i].data.size(); //  hz * seconds;  // total number of samples
 	  for (int n = 0; n < N; n++)
 	  {
 	    double amplitude = /*  (double)n / N * */ (double) max_amplitude / SYNTAX_MAX_AMPLITUDE;
 	
-	    double value   = square.data[n]; //sin( (two_pi * n * frequency_1) / hz ) ;//+ sin( (two_pi * n * frequency_2) / hz );
+	    double value   = sprite_table.data[i].data[n]; //sin( (two_pi * n * frequency_1) / hz ) ;//+ sin( (two_pi * n * frequency_2) / hz );
 	    //double value_1 = sin( (two_pi * n * frequency_1) / hz );
 	    //double value_2 = sin( (two_pi * n * frequency_2) / hz );
 	

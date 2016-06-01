@@ -47,7 +47,7 @@ class sprite_t
         void Load     (waveform_t* final);    
         void Hold     (const timepoint_t);
         void RecordAction  (action_t&);
-        waveform_table_t GetActionWaveformTable (const unsigned int i, const timepoint_t tp_of_interest, frequency_t freq);     
+        waveform_table_t GetActionWaveformTable (const unsigned int i, const timepoint_t tp_of_interest);     
    
         // Accessors for framerate
         void SetFrameRate (const double);
@@ -56,6 +56,9 @@ class sprite_t
         // Accessors for frequency
         void SetFreq (const frequency_t);
         frequency_t Freq () const;
+
+		// Computes duration over an entire sprite_t object 
+		timepoint_t Duration ();
 
         
         vector <waveform_table_t> Render (const double); 
@@ -78,6 +81,10 @@ class sprite_t
         
         double framerate;  
         frequency_t freq;
+        
+        timepoint_t duration;
+        bool duration_computed;
+        
         
         string name;
 }; /* sprite_t */

@@ -4,10 +4,8 @@ Sprite SquareToSawtooth
 	%Loop (i < 3) 
 	%{
 		Load  (Sawtooth);
-		Hold  (30);
-		
-		Morph (Sawtooth, 5000ms);
-		Morph (Square,   5000ms);
+		Morph (Square,   50ms);
+		Morph (Sawtooth,   50ms);
 		
 		% PRINTLN ("testing 1 2 3");
 		% PAUSE ();

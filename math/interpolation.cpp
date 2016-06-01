@@ -1,5 +1,4 @@
 #include "../wavegen.h"
-#define LinearInterpolation(x1,x2,x3,y1,y3) y1 + (x2 - x1) * (double) (y3 - y1) / (double) (x3 - x1)
 
 
 vector <amplitude_t> GetInterpolationVector (const waveform_t& waveform, location_t from, const amplitude_t amp_from,

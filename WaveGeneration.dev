@@ -7,9 +7,9 @@ IsCpp=1
 LogOutput=
 LogOutputEnabled=0
 CommandLine=
-Folders=an_string,components,components/function,components/sound,components/sprite,components/timepoint,components/variable,components/waveform,error,main,math,math/DSP,render
+Folders=an_string,components,components/function,components/score,components/sound,components/sprite,components/timepoint,components/variable,components/waveform,error,main,math,math/DSP,render
 CompilerSettings=0000000000000000001000000
-UnitCount=29
+UnitCount=31
 PchHead=-1
 PchSource=-1
 ProfilesCount=1
@@ -34,7 +34,7 @@ ProductVersion=
 SyncProduct=1
 AutoIncBuildNrOnRebuild=0
 AutoIncBuildNrOnCompile=0
-UnitCount=29
+UnitCount=31
 
 [Unit1]
 FileName=wavegen.cpp
@@ -335,9 +335,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit30]
-FileName=math\builtin_mathematical_functions.cpp
+FileName=score\score.cpp
 CompileCpp=1
-Folder=math
+Folder=components/score
 Compile=1
 Link=1
 Priority=1000
@@ -358,6 +358,16 @@ BuildCmd=
 FileName=math\run_function.cpp
 CompileCpp=1
 Folder=math
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit31]
+FileName=score\score.h
+CompileCpp=1
+Folder=components/score
 Compile=1
 Link=1
 Priority=1000

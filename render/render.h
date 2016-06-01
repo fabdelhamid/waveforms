@@ -25,10 +25,11 @@ waveform_table_t LinearWaveformInterpolation (const timepoint_t x1,
 
 // table for rendering sprites
 typedef struct {
-    timepoint_t wfps;    //waveforms per second
+    unsigned int waveform_render_multiplier ;    // how many times to repeat each waveform
     vector <waveform_table_t> data; 
 } sprite_table_t;
 
-sprite_table_t   GenerateSpriteTable   (const sprite_t&   input);
+// Generate a table of all waveforms constituting a sprite
+sprite_table_t   GenerateSpriteTable   ( sprite_t&   input,  const unsigned int waveform_render_multiplier ) ;
 
 

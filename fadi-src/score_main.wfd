@@ -1,0 +1,15 @@
+%%
+
+PRINTLN ("Score_main...");
+
+Score main
+{
+
+	Play (SquareToSawtooth, 440, 2s);
+	Silence (1s);
+	Play (SquareToSawtooth, 220, 2s);
+	
+	% PlayScore   (chords);
+	% PlayBgScore (chords);
+	
+} % main

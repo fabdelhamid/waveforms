@@ -137,7 +137,7 @@ void EvalCode (const string& context, unsigned int& line_number)
 			{
 
                 
-                if (currently_in_waveform_block || currently_in_sprite_block || currently_in_sound_block)
+                if (currently_in_any_block)
                     error ("cannot insert waveform here.");
                 
                 waveform_t wf (block_identifier, block_code) ;
@@ -172,11 +172,30 @@ void EvalCode (const string& context, unsigned int& line_number)
             } /* else if  - sprite */
 
             /*
+                Score block
+                */
+		    else if (block == BLOCK_SCORE)
+		    {
+                
+                if (currently_in_any_block)
+                    error ("cannot insert score here");
+
+                score_t score (block_identifier);
+                scores.push_back (score);
+                
+                currently_in_score_block = 1;
+                l++;
+        		EvalCode (block_code, line_number);
+        		currently_in_score_block = 0;
+            } /* else if  - score */
+
+
+            /*
                 Sound block
                 */
 		  /*  else if (block == BLOCK_SOUND)
 		    {
-                if (currently_in_waveform_block || currently_in_sprite_block || currently_in_sound_block)
+                if (currently_in_any_block)
                     error ("cannot insert sprite here");
 
                 sound_t sound;

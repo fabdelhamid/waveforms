@@ -145,12 +145,13 @@ enum block_t
    BLOCK_INVAL,
    BLOCK_WAVEFORM,
    BLOCK_SPRITE,
+   BLOCK_SCORE,
    BLOCK_LOOP,
    BLOCK_IF,
    BLOCKS
 }; // block_t 
 
-const string blockname [BLOCKS] =  {"INV", "Waveform", "Sprite", "Loop", "If"};
+const string blockname [BLOCKS] =  {"INV", "Waveform", "Sprite", "Score", "Loop", "If"};
 block_t CmpBlock (const string &context, location l);
 
 
@@ -214,3 +215,7 @@ amplitude_t CosineInterpolation (location_t x1, location_t x2, location_t x3, am
 // DSP section
 ////////////////////////////////////////////////////////
 vector < complex <double> > dft (const vector<amplitude_t>&);
+
+
+#define LinearInterpolation(x1,x2,x3,y1,y3) y1 + (x2 - x1) * (double) (y3 - y1) / (double) (x3 - x1)
+

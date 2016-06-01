@@ -1,9 +1,9 @@
 #include "../wavegen.h"
 
-sprite_t::sprite_t (const string& w_name):framerate(SPRITE_DEF_FR) 
+sprite_t::sprite_t (const string& w_name):framerate(SPRITE_DEF_FR),duration_computed(false)
 {
 	name = w_name;
-} // waveform_t::waveform_t
+} // sprite_t::sprite_t
 
 
 sprite_t* GetSprite (const string& identifier)
@@ -97,6 +97,8 @@ waveform_table_t sprite_t::GetFrame (const timepoint_t& tp)
                     
               Obviously an exception is when tp = 0, in which case the action
               to take is to load the waveform (normally a load action)
+              
+              
     */
   
     // First frame  
@@ -115,46 +117,42 @@ waveform_table_t sprite_t::GetFrame (const timepoint_t& tp)
         timepoint_t timepoint_at_i = 0;
         int i;
         // skip through the two points interested
-        for (i = 0; i < actions.size() - 1; timepoint_at_i += actions[i].length, i++)
+        for (i = 0; i < actions.size()  /* - 1*/ ; timepoint_at_i += actions[i].length, i++)
         {            
             actions[i].timepoint = timepoint_at_i;
             timepoint_t next_tp = timepoint_at_i + actions[i].length;
             
             bool condition = (next_tp - tp) > DBL_PRECISION_THOLD;
-        
-            
+              
             // target timepoint is between timepoints of two actions
             if ((tp >= (timepoint_at_i - DBL_PRECISION_THOLD)) && condition)
-                return GetActionWaveformTable (i, tp, freq);
+                return GetActionWaveformTable (i, tp);
             
         } // for -- through actions
         
-        if (i == actions.size())
-            error ("i == actions.size() not supported yet");
+        if (i >= actions.size())
+        {
+            error ("sprite_t::GetFrame: requested index exceeds action size"); 
+        } // if 
         
+        /*
         cout << "Relevant i: " << i << " out of " << actions.size() << endl;        
         error ("sprite @ tp>0 not supported yet."); 
+        */
         
     } // else
         
     timepoint_t timepoint_of_last_action;        
       
-    /*              
-              If last action was a Load, result waveform(_table_t) is that
-              waveform.
-    */
-    
-    
-    cout <<  Name() << ": Will attempt to get frame at time " << tp << endl;
-    cout << "action size: " << actions.size() << endl;
-    
-    system ("pause");
-    exit (0);
+
 } // sprite_t::GetFrame
 
 // Compute waveform table for a given action
-waveform_table_t sprite_t::GetActionWaveformTable (const unsigned int i, const timepoint_t tp_of_interest, frequency_t freq)
+waveform_table_t sprite_t::GetActionWaveformTable (const unsigned int i, const timepoint_t tp_of_interest)
 {
+	
+	freq = this->Freq();
+	
     waveform_table_t result;
     unsigned int last_relevant_i ;
 
@@ -222,3 +220,27 @@ waveform_table_t sprite_t::GetActionWaveformTable (const unsigned int i, const t
     
     return result;
 } // GetActionWaveformTable
+
+
+// Computes entire duraction of sprite
+timepoint_t sprite_t::Duration ()
+{
+    
+    // Can read duration from cache.
+    if (duration_computed)
+    	return duration;
+    	
+    // Duration was not computed, recompute duration
+    
+    duration = 0;
+    for (int i = 0; i < actions.size(); i++)
+    	duration += actions[i].length;
+
+
+	duration_computed = true;
+	return duration;
+	
+} // sprite_t::Duration 
+
+
+

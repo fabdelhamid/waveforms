@@ -105,12 +105,51 @@ waveform_table_t LinearWaveformInterpolation (const timepoint_t x1,
     
     waveform_table_t wvt1 = GenerateWaveformFrequencyTable (*wf1, freq);
     waveform_table_t wvt2 = GenerateWaveformFrequencyTable (*wf2, freq);
+    waveform_table_t result;
     
     // TODO: support interpolating two waveforms of different sizes
     if (wvt1.data.size() != wvt2.data.size())
         error ("cannot interpolate two waveforms of different sizes");
-    
-    cout << "will process morph" << endl;
-    system ("pause");
-    exit (0);
+   
+    for (int i = 0; i < wvt1.data.size(); i++)
+    {
+        amplitude_t y2 = LinearInterpolation (x1, x2, x3, wvt1.data[i], wvt2.data[i]);
+        result.data.push_back (y2);
+    } // for
+     
+    return result;
+     
 } // LinearWaveformInterpolation
+
+// Generate a table of all waveforms constituting a sprite
+sprite_table_t   GenerateSpriteTable   (sprite_t&   input, const unsigned int waveform_render_multiplier )
+{
+	/*
+		Description of code: 
+			Construct each waveform, adding PERIOD * waveform_render_multiplier to reference timepoint_t counter.
+			Render next waveform with said reference.
+			
+		*/
+		
+		
+	frequency_t freq = input.Freq();
+	
+	// Construct a new table
+	sprite_table_t result;
+	result.waveform_render_multiplier = waveform_render_multiplier;
+	
+	// Reference counter
+	timepoint_t duration_of_sprite = input.Duration();
+	
+	
+	for (timepoint_t t = 0; t < duration_of_sprite; t += (1/(double) freq) * waveform_render_multiplier)	
+	{
+		waveform_table_t oneframe = input.GetFrame (t);
+		result.data.push_back(oneframe);
+	} // for
+	 
+   return result;
+    
+} // GenerateSpriteTable
+
+

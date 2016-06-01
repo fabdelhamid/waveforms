@@ -80,6 +80,7 @@ using namespace std;
 #include "./error/error.h"
 #include "./render/render.h"
 #include "./sprite/sprite.h"
+#include "./score/score.h"
 #include "./waveform/waveform.h"
 #include "./function/function.h"
 #include "./variable/variable.h"
@@ -97,11 +98,14 @@ void EvalCode (const string& context, unsigned int& line_number);
 extern int currently_in_sprite_block;
 extern int currently_in_sound_block;
 extern int currently_in_waveform_block;
-#define currently_in_any_block currently_in_sprite_block || currently_in_sound_block || currently_in_waveform_block
+extern int currently_in_score_block;
+
+#define currently_in_any_block currently_in_sprite_block || currently_in_sound_block || currently_in_waveform_block  || currently_in_score_block
 // global table to store Waveforms, Sprites and Sounds
 extern vector <waveform_t> waveforms;
 extern vector <sprite_t>   sprites;
 extern vector <sound_t>    sounds;
+extern vector <score_t>    scores;
 
 // global output file properties
 
@@ -111,6 +115,7 @@ extern unsigned short  wav_channels, wav_sps, wav_bpsample;
 #define CURRENT_SPRITE   sprites.back()
 #define CURRENT_SOUND    sounds.back()
 #define CURRENT_WAVEFORM waveforms.back()
+#define CURRENT_SCORE    waveforms.back()
 
 // Minimum and maximum frequencies, in Hz
 #define MIN_FREQ 20

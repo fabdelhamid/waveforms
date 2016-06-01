@@ -74,9 +74,7 @@ string Eval  (const string& o_operation)
 
         // literal value
         if (IsNumericValue (operation))
-		{
 		    return tostr (NumEval (operation)); //maybe return operation  directly
-		} // if
 		
 	    function_t fcode;
         string function_name = GetFunctionName(operation);
